@@ -1,0 +1,40 @@
+---
+title: Tags
+permalink: /tags/
+---
+<h1 class="page-title">Browse by tag</h1>
+
+{% assign sorted_tags = site.tags | sort %}
+{% if sorted_tags.size == 0 %}
+  <p class="muted">No tags yet.</p>
+{% else %}
+  <div class="tag-picker" id="tag-picker">
+    {% for tag in sorted_tags %}
+    <button type="button" class="tag-chip" data-tag="{{ tag[0] | escape }}" aria-pressed="false">
+      #{{ tag[0] | escape }} <span class="count">{{ tag[1].size }}</span>
+    </button>
+    {% endfor %}
+  </div>
+
+  <div class="tag-controls">
+    <label class="match-any">
+      <input type="checkbox" id="match-any" />
+      Match <strong>any</strong> selected tag (default: posts must have <strong>all</strong> of them)
+    </label>
+    <button type="button" id="clear-tags" class="link-button">Clear selection</button>
+  </div>
+{% endif %}
+
+<p class="tag-status muted" id="tag-status" aria-live="polite"></p>
+
+<ul class="post-list tag-results" id="tag-results">
+  {% for post in site.posts %}
+  <li data-tags='{{ post.tags | jsonify | escape }}'>
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    {% include tag-list.html tags=post.tags %}
+  </li>
+  {% endfor %}
+</ul>
+
+<script src="{{ '/assets/js/tags.js' | relative_url }}" defer></script>

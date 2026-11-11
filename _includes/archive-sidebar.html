@@ -1,0 +1,26 @@
+{% comment %}Sidebar: posts grouped by year, then month, with links into /archive/.{% endcomment %}
+<section class="sidebar-section archive-sidebar">
+  <h2 class="sidebar-title">Archive</h2>
+  {% if site.posts.size == 0 %}
+    <p class="muted">No posts yet.</p>
+  {% else %}
+    {% assign by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+    <ul class="archive-years">
+      {% for year in by_year %}
+      <li>
+        <span class="archive-year">{{ year.name }}</span>
+        {% assign by_month = year.items | group_by_exp: "post", "post.date | date: '%m'" %}
+        <ul class="archive-months">
+          {% for month in by_month %}
+          {% assign first_post = month.items | first %}
+          <li>
+            <a href="{{ '/archive/' | relative_url }}#{{ year.name }}-{{ month.name }}">{{ first_post.date | date: "%B" }}</a>
+            <span class="count">({{ month.size }})</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>

@@ -1,0 +1,41 @@
+title: Ryan's Journal
+description: A space to show off the cool things I've been creating.
+url: "https://ryansjournal.github.io"
+baseurl: ""
+
+# Markdown: GitHub-flavored, with automatic ids on headings (used by the
+# "On this page" sidebar).
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+
+# Post URLs look like /2026/11/10/first-post/
+permalink: /:year/:month/:day/:title/
+
+# Home page pagination: 5 previews per page at /, /page2/, /page3/, ...
+paginate: 5
+paginate_path: "/page:num/"
+
+plugins:
+  - jekyll-paginate
+
+# Every post uses the "post" layout and everything else uses "default", so
+# you never need to type `layout:` in a post.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
