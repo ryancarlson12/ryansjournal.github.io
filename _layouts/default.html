@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title>
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}" />
+    <script>
+      // Runs before the page draws so dark mode doesn't flash white first.
+      (function () {
+        var theme;
+        try { theme = localStorage.getItem("theme"); } catch (e) {}
+        if (theme !== "dark" && theme !== "light") {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+    <script src="{{ '/assets/js/theme.js' | relative_url }}" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+        <nav class="site-nav">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <a href="{{ '/archive/' | relative_url }}">Archive</a>
+          <a href="{{ '/tags/' | relative_url }}">Tags</a>
+          <button id="theme-toggle" class="theme-toggle" type="button" hidden>🌙</button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrap layout">
+      <main class="content">
+        {{ content }}
+      </main>
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          {% if page.layout == "post" %}{% include toc-sidebar.html %}{% endif %}
+          {% include archive-sidebar.html %}
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="wrap">© {{ site.time | date: "%Y" }} {{ site.title | escape }}</div>
+    </footer>
+  </body>
+</html>

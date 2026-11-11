@@ -1,0 +1,25 @@
+---
+title: Archive
+permalink: /archive/
+---
+<h1 class="page-title">Archive</h1>
+
+{% if site.posts.size == 0 %}
+  <p class="muted">No posts yet.</p>
+{% endif %}
+
+{% assign by_month = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
+{% for month in by_month %}
+  {% assign first_post = month.items | first %}
+  <section class="archive-month" id="{{ month.name }}">
+    <h2>{{ first_post.date | date: "%B %Y" }}</h2>
+    <ul class="post-list">
+      {% for post in month.items %}
+      <li>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d" }}</time>
+        <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endfor %}

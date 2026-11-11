@@ -1,12 +1,29 @@
-<!doctype html> <!-- hello I am a comment! -->
-<html lang="en-US">
-  <head> <!--root element for entire page -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" /> <!-- renders to the size of the browser window -->
-    <title> Ryan's Journal </title>
-  </head>
-  <body>
-    <img src="images/happy_emoji.png" alt="Temporary image" />
-    <p> Under Construction! </p>
-  </body>
-</html>
+---
+---
+{% comment %}
+  Home page: paginated post previews, newest first (5 per page, set in _config.yml).
+  Pagination only works on a file named index.html, so keep this name.
+{% endcomment %}
+{% if paginator.posts.size == 0 %}
+  <p class="muted">No posts yet. Check back soon!</p>
+{% endif %}
+
+{% for post in paginator.posts %}
+  {% include post-preview.html post=post %}
+{% endfor %}
+
+{% if paginator.total_pages > 1 %}
+<nav class="pagination" aria-label="Pages">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}">← Newer</a>
+  {% else %}
+    <span class="disabled">← Newer</span>
+  {% endif %}
+  <span class="page-count">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}">Older →</a>
+  {% else %}
+    <span class="disabled">Older →</span>
+  {% endif %}
+</nav>
+{% endif %}

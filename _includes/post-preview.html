@@ -1,0 +1,20 @@
+{% comment %}
+  One post preview card. Pass the post in as "post".
+  Teaser = everything above <!--more--> if the post has it, otherwise the first paragraph.
+{% endcomment %}
+{% assign p = include.post %}
+<article class="post-preview">
+  <h2 class="preview-title"><a href="{{ p.url | relative_url }}">{{ p.title | escape }}</a></h2>
+  <p class="post-meta">
+    <time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%B %-d, %Y" }}</time>
+  </p>
+  {% include tag-list.html tags=p.tags %}
+  <div class="preview-excerpt">
+    {% if p.content contains "<!--more-->" %}
+      {{ p.content | split: "<!--more-->" | first }}
+    {% else %}
+      {{ p.excerpt }}
+    {% endif %}
+  </div>
+  <a class="read-more" href="{{ p.url | relative_url }}">Read more →</a>
+</article>
