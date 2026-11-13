@@ -5,4 +5,4 @@ tags: [welcome]
 
 This is my first post.
 
-![Happy emoji](/images/happy_emoji.png){: width="200" }
+![Happy emoji]({{ '/images/happy_emoji.png' | relative_url }}){: width="200" }

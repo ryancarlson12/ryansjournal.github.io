@@ -1,7 +1,7 @@
 title: Ryan's Journal
 description: A space to show off the cool things I've been creating.
-url: "https://ryansjournal.github.io"
-baseurl: ""
+url: "https://ryancarlson12.github.io"
+baseurl: "/ryansjournal.github.io"
 
 # Markdown: GitHub-flavored, with automatic ids on headings (used by the
 # "On this page" sidebar).
